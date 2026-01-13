@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Préstamos - SIGECRED</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #nav-menu {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+       <a href="index.html" class="text-xl font-bold">SIGECRED - Sistema de Gestión Crediticia</a>
+      <div class="relative">
+        <button id="menu-btn" class="text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+        <div id="nav-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden origin-top-right transform scale-95 opacity-0">
+          <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+          <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nuevo Préstamo</a>
+          <a href="prestamos.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Préstamos</a>
+          <a href="index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nuevo Cliente</a>
+          <a href="clientes.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clientes</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="p-4">
+      <h1 class="text-2xl font-bold mb-4">Lista de Préstamos</h1>
+      
+      <!-- Search and Sort Controls -->
+      <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label for="search-cedula" class="block text-sm font-medium text-gray-700">Buscar por Cédula</label>
+            <input type="text" id="search-cedula" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+          </div>
+          <div>
+            <label for="search-nombre" class="block text-sm font-medium text-gray-700">Buscar por Nombre/Apellido</label>
+            <input type="text" id="search-nombre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+          </div>
+          <div>
+            <label for="sort-by" class="block text-sm font-medium text-gray-700">Ordenar por</label>
+            <select id="sort-by" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+              <option value="nombreApellido">Nombre y Apellido</option>
+              <option value="frecuenciaPago">Frecuencia de Pago</option>
+            </select>
+          </div>
+          <div>
+            <label for="sort-order" class="block text-sm font-medium text-gray-700">Orden</label>
+            <select id="sort-order" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+              <option value="asc">Ascendente</option>
+              <option value="desc">Descendente</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="loans-list" class="space-y-4">
+        <!-- Los préstamos se insertarán aquí dinámicamente -->
+        <p class="text-gray-500">No hay préstamos registrados.</p>
+      </div>
+    </main>
+    
+    <!-- Modal Ver Préstamo -->
+    <div id="view-loan-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg m-4">
+        <h2 class="text-2xl font-bold mb-4">Ver Préstamo</h2>
+        <form id="view-loan-form" class="space-y-4">
+          <input type="hidden" id="view-loan-id">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="view-cedula" class="block text-sm font-medium text-gray-700">Cédula</label>
+              <input type="text" id="view-cedula" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" disabled>
+            </div>
+            <div>
+              <label for="view-nombreApellido" class="block text-sm font-medium text-gray-700">Nombre y Apellido</label>
+              <input type="text" id="view-nombreApellido" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" disabled>
+            </div>
+          </div>
+          <div>
+            <label for="view-capital" class="block text-sm font-medium text-gray-700">Capital (Gs.)</label>
+            <input type="text" id="view-capital" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" disabled>
+          </div>
+          <div>
+            <label for="view-estado" class="block text-sm font-medium text-gray-700">Estado</label>
+            <select id="view-estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+              <option value="ACTIVO">Activo</option>
+              <option value="CANCELADO">Cancelado</option>
+            </select>
+          </div>
+          <div class="flex justify-end space-x-4 pt-4">
+            <button type="button" id="cancel-view-loan-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="db.js"></script>
+  <script src="prestamos.js"></script>
+</body>
+</html>

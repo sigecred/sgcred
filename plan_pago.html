@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan de Pago - SIGECRED</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100">
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <a href="index.html" class="text-xl font-bold">SIGECRED - Sistema de Gestión Crediticia</a>
+        <a href="prestamos.html" class="text-sm hover:underline">Volver a Préstamos</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="p-4 container mx-auto">
+      <!-- Loan Details Header -->
+      <div id="loan-details" class="bg-white p-4 rounded-lg shadow mb-6">
+        <div class="flex justify-between items-center">
+          <h1 class="text-2xl font-bold text-gray-800">Plan de Pago</h1>
+          <button id="generar-pdf" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">GENERAR PDF</button>
+        </div>
+        <p class="text-gray-600">Cargando detalles del préstamo...</p>
+      </div>
+
+      <!-- Installment Plan Table -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">N° Cuota</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vencimiento</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de Pago</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Monto Pagado</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="cuotas-table-body" class="bg-white divide-y divide-gray-200">
+              <!-- Las filas de las cuotas se insertarán aquí dinámicamente -->
+              <tr><td colspan="5" class="text-center py-4 text-gray-500">Cargando plan de pago...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal Formulario Registro de Pago de Cuota -->
+    <div id="payment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md m-4">
+        <h2 class="text-2xl font-bold mb-4">Registrar Pago de Cuota</h2>
+        <form id="payment-form" class="space-y-4">
+          <input type="hidden" id="payment-cuota-id">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Cuota N°</label>
+            <p id="payment-cuota-numero" class="mt-1 text-lg font-semibold text-gray-900"></p>
+          </div>
+          <div>
+            <label for="payment-date" class="block text-sm font-medium text-gray-700">Fecha de Pago</label>
+            <input type="date" id="payment-date" name="payment-date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+          </div>
+          <div>
+            <label for="payment-amount" class="block text-sm font-medium text-gray-700">Monto Pagado (Gs.)</label>
+            <input type="text" inputmode="numeric" id="payment-amount" name="payment-amount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 pt-4">
+            <button type="button" id="cancel-payment-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">Cancelar</button>
+            <button type="submit" id="confirm-payment-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Confirmar Pago</button>
+            <button type="button" id="confirm-and-generate-pdf-btn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Confirmar y Generar PDF</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="db.js"></script>
+  <script src="plan_pago.js"></script>
+</body>
+</html>

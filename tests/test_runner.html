@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pruebas - SIGECRED</title>
+  <style>
+    body { font-family: sans-serif; }
+    .success { color: green; }
+    .failure { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Pruebas Unitarias - SIGECRED</h1>
+  <div id="results"></div>
+
+  <!-- Importar la lógica de la aplicación -->
+  <script src="../src/app.js"></script>
+
+  <!-- Script para ejecutar las pruebas -->
+  <script>
+    let failedTests = 0;
+
+    function runTests() {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<h2>Resultados:</h2>';
+
+      // Caso de prueba 1: Préstamo estándar
+      let principal = 5000000; // Gs. 5,000,000
+      let interest = 2; // 2% mensual
+      let months = 12;
+      let expected = 472797.98; // Valor de cuota actualizado
+      let result = calculateAmortization(principal, interest, months);
+      assertEquals(result, expected, 'Préstamo estándar');
+
+      // Caso de prueba 2: Tasa de interés cero
+      principal = 1200000;
+      interest = 0;
+      months = 12;
+      expected = 100000.00;
+      result = calculateAmortization(principal, interest, months);
+      assertEquals(result, expected, 'Tasa de interés cero');
+
+      // Caso de prueba 3: Principal cero
+      principal = 0;
+      interest = 5;
+      months = 24;
+      expected = 0;
+      result = calculateAmortization(principal, interest, months);
+      assertEquals(result, expected, 'Principal cero');
+      
+      // Caso de prueba 4: Plazo cero
+      principal = 1000000;
+      interest = 3;
+      months = 0;
+      expected = 0;
+      result = calculateAmortization(principal, interest, months);
+      assertEquals(result, expected, 'Plazo cero');
+
+      // Caso de prueba 5: Préstamo a corto plazo
+      principal = 2000000;
+      interest = 1.5;
+      months = 3;
+      expected = 686765.92;
+      result = calculateAmortization(principal, interest, months);
+      assertEquals(result, expected, 'Préstamo a corto plazo');
+
+      // Mensaje final
+      if (failedTests === 0) {
+        resultsDiv.innerHTML += '<p class="success">All tests passed!</p>';
+      } else {
+        resultsDiv.innerHTML += `<p class="failure">${failedTests} test(s) failed.</p>`;
+      }
+    }
+
+    function assertEquals(actual, expected, testName) {
+      const resultsDiv = document.getElementById('results');
+      const tolerance = 0.01;
+      if (Math.abs(actual - expected) < tolerance) {
+        resultsDiv.innerHTML += `<p class="success">[PASA] ${testName}</p>`;
+      } else {
+        failedTests++;
+        resultsDiv.innerHTML += `<p class="failure">[FALLA] ${testName}: Se esperaba ${expected}, pero se obtuvo ${actual}</p>`;
+      }
+    }
+
+    window.onload = runTests;
+  </script>
+</body>
+</html>

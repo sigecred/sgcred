@@ -1,0 +1,70 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - heading "JOC Soluciones Financieras" [level=1] [ref=e4]
+    - button [ref=e6] [cursor=pointer]:
+      - img [ref=e7]
+  - main [ref=e9]:
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - heading "Balance Total" [level=2] [ref=e12]
+        - paragraph [ref=e13]: Gs. 0
+      - generic [ref=e14]:
+        - heading "Deuda Total Clientes" [level=2] [ref=e15]
+        - paragraph [ref=e16]: Gs. 0
+      - generic [ref=e17]:
+        - heading "Cobros Hoy" [level=2] [ref=e18]
+        - paragraph [ref=e19]: Gs. 0
+      - generic [ref=e20]:
+        - heading "Clientes Morosos" [level=2] [ref=e21]
+        - paragraph [ref=e22]: "0"
+    - heading "Cobros de la Semana" [level=2] [ref=e24]
+  - generic [ref=e28]:
+    - heading "Nuevo Préstamo" [level=2] [ref=e29]
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]: Cédula
+          - textbox "Cédula" [ref=e34]: "1234567"
+        - generic [ref=e35]:
+          - generic [ref=e36]: Nombre y Apellido
+          - textbox "Nombre y Apellido" [active] [ref=e37]
+      - generic [ref=e38]:
+        - generic [ref=e39]: Capital (Gs.)
+        - textbox "Capital (Gs.)" [ref=e40]: 1.000.000
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: Frecuencia de Pago
+          - combobox "Frecuencia de Pago" [ref=e44]:
+            - option "Diario"
+            - option "Semanal"
+            - option "Quincenal"
+            - option "Mensual" [selected]
+            - option "Un solo Pago"
+        - generic [ref=e45]:
+          - generic [ref=e46]: Cantidad de Cuotas
+          - spinbutton "Cantidad de Cuotas" [ref=e47]: "3"
+        - generic [ref=e48]:
+          - generic [ref=e49]: Monto de Cuota (Gs.)
+          - textbox "Monto de Cuota (Gs.)" [ref=e50]: "350.000"
+      - generic [ref=e51]:
+        - generic [ref=e52]: Interés Total (%)
+        - textbox "Interés Total (%)" [ref=e53]: 5.00 %
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - generic [ref=e56]: Fecha de Desembolso
+          - textbox "Fecha de Desembolso" [ref=e57]: 2025-12-30
+        - generic [ref=e58]:
+          - generic [ref=e59]: Fecha de Primer Pago
+          - textbox "Fecha de Primer Pago" [ref=e60]: 2025-12-30
+      - generic [ref=e61]:
+        - generic [ref=e62]: Estado
+        - combobox "Estado" [ref=e63]:
+          - option "Activo" [selected]
+          - option "Cancelado"
+      - generic [ref=e64]:
+        - button "Cancelar" [ref=e65] [cursor=pointer]
+        - button "Grabar Préstamo" [ref=e66] [cursor=pointer]
+```

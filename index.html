@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIGECRED - Sistema de Gestión Crediticia</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos para el menú desplegable */
+    #nav-menu {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+      <h1 class="text-xl font-bold">SIGECRED - Sistema de Gestión Crediticia</h1>
+      <div class="relative">
+        <button id="menu-btn" class="text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+        <div id="nav-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 hidden origin-top-right transform scale-95 opacity-0">
+          <a href="#" id="new-loan-link" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nuevo Préstamo</a>
+          <a href="prestamos.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Préstamos</a>
+          <a href="#" id="new-client-link" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Nuevo Cliente</a>
+          <a href="clientes.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Clientes</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="p-4 flex items-center justify-center" style="min-height: calc(100vh - 64px);">
+      <div class="w-full max-w-xs space-y-4">
+        <button id="main-new-loan-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition-colors">
+          Nuevo Préstamo
+        </button>
+        <a href="prestamos.html" class="block w-full text-center bg-white text-blue-600 font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-gray-100 transition-colors border border-blue-600">
+          Ver Préstamos
+        </a>
+        <button id="main-new-client-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition-colors">
+          Nuevo Cliente
+        </button>
+        <a href="clientes.html" class="block w-full text-center bg-white text-blue-600 font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-gray-100 transition-colors border border-blue-600">
+          Ver Clientes
+        </a>
+      </div>
+    </main>
+    
+    <!-- Modal Formulario Nuevo Préstamo -->
+    <div id="loan-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg m-4">
+        <h2 class="text-2xl font-bold mb-4">Nuevo Préstamo</h2>
+        <form id="loan-form" class="space-y-4">
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="cedula" class="block text-sm font-medium text-gray-700">Cédula</label>
+              <input type="text" id="cedula" name="cedula" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <div>
+              <label for="nombres" class="block text-sm font-medium text-gray-700">Nombres</label>
+              <input type="text" id="nombres" name="nombres" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <div>
+              <label for="apellidos" class="block text-sm font-medium text-gray-700">Apellidos</label>
+              <input type="text" id="apellidos" name="apellidos" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="capital" class="block text-sm font-medium text-gray-700">Capital (Gs.)</label>
+            <input type="text" inputmode="numeric" id="capital" name="capital" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label for="frecuenciaPago" class="block text-sm font-medium text-gray-700">Frecuencia de Pago</label>
+              <select id="frecuenciaPago" name="frecuenciaPago" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+                <option value="D">Diario</option>
+                <option value="S">Semanal</option>
+                <option value="Q">Quincenal</option>
+                <option value="M">Mensual</option>
+                <option value="U">Un solo Pago</option>
+              </select>
+            </div>
+            <div>
+              <label for="cantidadCuotas" class="block text-sm font-medium text-gray-700">Cantidad de Cuotas</label>
+              <input type="number" id="cantidadCuotas" name="cantidadCuotas" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <div>
+              <label for="montoCuota" class="block text-sm font-medium text-gray-700">Monto de Cuota (Gs.)</label>
+              <input type="text" inputmode="numeric" id="montoCuota" name="montoCuota" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="interesTotal" class="block text-sm font-medium text-gray-700">Interés Total (%)</label>
+            <input type="text" id="interesTotal" name="interesTotal" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100" readonly>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="fechaDesembolso" class="block text-sm font-medium text-gray-700">Fecha de Desembolso</label>
+              <input type="date" id="fechaDesembolso" name="fechaDesembolso" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <div>
+              <label for="fechaPrimerPago" class="block text-sm font-medium text-gray-700">Fecha de Primer Pago</label>
+              <input type="date" id="fechaPrimerPago" name="fechaPrimerPago" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+          </div>
+          
+          <div>
+            <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+            <select id="estado" name="estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+              <option value="ACTIVO">Activo</option>
+              <option value="CANCELADO">Cancelado</option>
+            </select>
+          </div>
+
+          <div class="flex justify-end space-x-4 pt-4">
+            <button type="button" id="cancel-loan-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Grabar Préstamo</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Modal Formulario Nuevo Cliente -->
+    <div id="client-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+      <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg m-4">
+        <h2 class="text-2xl font-bold mb-4">Nuevo Cliente</h2>
+        <form id="client-form" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="client-cedula" class="block text-sm font-medium text-gray-700">Cédula</label>
+              <input type="text" id="client-cedula" name="cedula" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+            <div>
+              <label for="client-nombres" class="block text-sm font-medium text-gray-700">Nombres</label>
+              <input type="text" id="client-nombres" name="nombres" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+            </div>
+          </div>
+          <div>
+            <label for="client-apellidos" class="block text-sm font-medium text-gray-700">Apellidos</label>
+            <input type="text" id="client-apellidos" name="apellidos" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
+          </div>
+          <div>
+            <label for="client-direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+            <input type="text" id="client-direccion" name="direccion" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="client-barrio" class="block text-sm font-medium text-gray-700">Barrio</label>
+              <input type="text" id="client-barrio" name="barrio" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div>
+              <label for="client-ciudad" class="block text-sm font-medium text-gray-700">Ciudad</label>
+              <input type="text" id="client-ciudad" name="ciudad" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="client-telefono1" class="block text-sm font-medium text-gray-700">Teléfono 1</label>
+              <input type="tel" id="client-telefono1" name="telefono1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div>
+              <label for="client-telefono2" class="block text-sm font-medium text-gray-700">Teléfono 2</label>
+              <input type="tel" id="client-telefono2" name="telefono2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="client-refNombre" class="block text-sm font-medium text-gray-700">Nombre Referencia</label>
+              <input type="text" id="client-refNombre" name="refNombre" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+            <div>
+              <label for="client-refTelefono" class="block text-sm font-medium text-gray-700">Teléfono Referencia</label>
+              <input type="tel" id="client-refTelefono" name="refTelefono" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm">
+            </div>
+          </div>
+          <div class="flex justify-end space-x-4 pt-4">
+            <button type="button" id="cancel-client-btn" class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400">Cancelar</button>
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Grabar Cliente</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

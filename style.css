@@ -1,0 +1,9 @@
+/* Reglas personalizadas para asegurar el scroll en los modales en dispositivos móviles */
+
+/* El contenedor interno de cada modal */
+#loan-modal > div,
+#client-modal > div,
+#payment-modal > div {
+  max-height: 85vh; /* Limita la altura al 85% de la altura de la ventana */
+  overflow-y: auto; /* Añade scroll vertical si el contenido se desborda */
+}
